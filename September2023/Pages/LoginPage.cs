@@ -1,9 +1,5 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using September2023.Utilities;
 
 namespace September2023.Pages
 {
@@ -17,6 +13,7 @@ namespace September2023.Pages
             driver.Navigate().GoToUrl("http://horse.industryconnect.io/Account/Login");
 
             //Identify username textbox and enter valid username
+            Wait.WaitToBeVisible(driver, "Id", "UserName", 5);
             IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
             usernameTextbox.SendKeys("hari");
 

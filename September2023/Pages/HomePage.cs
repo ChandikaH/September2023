@@ -1,9 +1,5 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 
 namespace September2023.Pages
 {
@@ -11,9 +7,16 @@ namespace September2023.Pages
     {
         public void GoToTMPage(IWebDriver driver)
         {
-            // Navigate to Time & Material module
-            IWebElement administrationDropdown = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
-            administrationDropdown.Click();
+            try
+            {
+                // Navigate to Time & Material module
+                IWebElement administrationDropdown = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+                administrationDropdown.Click();
+            }
+            catch(Exception exception)
+            {
+                Assert.Fail("Turnup portal Home page not displayed", exception.Message);
+            }
 
             IWebElement tmOption = driver.FindElement(By.XPath("//a[contains(text(),'Time & Materials')]"));
             tmOption.Click();

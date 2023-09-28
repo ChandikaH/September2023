@@ -1,9 +1,7 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using September2023.Utilities;
 
 namespace September2023.Pages
 {
@@ -12,6 +10,10 @@ namespace September2023.Pages
         // Test Case - Create a new Time record
         public void CreateTimeRecord(IWebDriver driver)
         {
+            //WebDriverWait webDriverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            //webDriverWait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"container\"]/p/a")));
+            Wait.WaitToBeClickable(driver, "Xpath","//*[@id=\"container\"]/p/a", 5);
+
             // Click on the Create New button
             IWebElement createNewButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
             createNewButton.Click();
@@ -24,9 +26,11 @@ namespace September2023.Pages
 
             // Enter Code
             IWebElement codeTextBox = driver.FindElement(By.Id("Code"));
+            Wait.WaitToBeClickable(driver,"Id", "Code", 7);
             codeTextBox.SendKeys("September2023");
 
             // Enter Description
+            Wait.WaitToBeVisible(driver, "Id", "Description", 7);
             IWebElement descriptionTextBox = driver.FindElement(By.Id("Description"));
             descriptionTextBox.SendKeys("Desc September 2023");
 
@@ -45,14 +49,7 @@ namespace September2023.Pages
             goToLastPageButton.Click();
 
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            if (newCode.Text == "September2023")
-            {
-                Console.WriteLine("New time record has been created successfully.");
-            }
-            else
-            {
-                Console.WriteLine("Time Record has not been created");
-            }
+            Assert.That(newCode.Text == "September2023", "Time Record has not been created");
         }
 
         public void EditTimeRecord(IWebDriver driver)
